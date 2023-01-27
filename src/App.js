@@ -25,6 +25,7 @@ class App extends React.Component {
         }, this.checkButton);
       },
       onSaveButtonClick: (() => {}),
+      tryunfoDeck: [],
     };
   }
 
