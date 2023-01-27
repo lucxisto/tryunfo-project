@@ -22,11 +22,67 @@ class App extends React.Component {
         const value = target.type === 'checkbox' ? target.checked : target.value;
         this.setState({
           [name]: value,
-        });
+        }, this.checkButton);
       },
       onSaveButtonClick: (() => {}),
     };
   }
+
+  checkButton = () => {
+    // console.log('inputs: ', this.checkTextInput(), 'numbers :', this.checkNumberInput());
+    if (this.checkTextInput() || this.checkNumberInput()) {
+      this.setState({
+        isSaveButtonDisabled: true,
+      });
+    } else {
+      this.setState({
+        isSaveButtonDisabled: false,
+      });
+    }
+  };
+
+  checkTextInput = () => {
+    const {
+      cardName,
+      cardDescription,
+      cardImage,
+      cardRare,
+    } = this.state;
+    return cardName === ''
+        || cardDescription === ''
+        || cardImage === ''
+        || cardRare === '';
+  };
+
+  checkNumberInput = () => {
+    const {
+      cardAttr1,
+      cardAttr2,
+      cardAttr3,
+    } = this.state;
+    let outputAnswer;
+    if (cardAttr1 === '' || cardAttr2 === '' || cardAttr3 === '') {
+      outputAnswer = true;
+    } else if (cardAttr1 !== '' && cardAttr2 !== '' && cardAttr3 !== '') {
+      const attributeOne = parseFloat(cardAttr1);
+      const attributeTwo = parseFloat(cardAttr2);
+      const attributeThree = parseFloat(cardAttr3);
+      console.log(attributeOne);
+      const totalAttributes = attributeOne + attributeTwo + attributeThree;
+      const maxAllAttributes = 210;
+      const maxSingleAttribute = 90;
+      console.log(totalAttributes > maxAllAttributes);
+      if (totalAttributes > maxAllAttributes
+        || (attributeOne > maxSingleAttribute || attributeOne < 0)
+        || (attributeTwo > maxSingleAttribute || attributeTwo < 0)
+        || (attributeThree > maxSingleAttribute || attributeThree < 0)) {
+        outputAnswer = true;
+      } else {
+        outputAnswer = false;
+      }
+    }
+    return outputAnswer;
+  };
 
   render() {
     const {
@@ -43,6 +99,7 @@ class App extends React.Component {
       onInputChange,
       onSaveButtonClick,
     } = this.state;
+
     return (
       <div>
         <Form
