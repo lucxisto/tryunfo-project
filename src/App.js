@@ -29,7 +29,6 @@ class App extends React.Component {
   }
 
   checkButton = () => {
-    // console.log('inputs: ', this.checkTextInput(), 'numbers :', this.checkNumberInput());
     if (this.checkTextInput() || this.checkNumberInput()) {
       this.setState({
         isSaveButtonDisabled: true,
@@ -67,11 +66,9 @@ class App extends React.Component {
       const attributeOne = parseFloat(cardAttr1);
       const attributeTwo = parseFloat(cardAttr2);
       const attributeThree = parseFloat(cardAttr3);
-      console.log(attributeOne);
       const totalAttributes = attributeOne + attributeTwo + attributeThree;
       const maxAllAttributes = 210;
       const maxSingleAttribute = 90;
-      console.log(totalAttributes > maxAllAttributes);
       if (totalAttributes > maxAllAttributes
         || (attributeOne > maxSingleAttribute || attributeOne < 0)
         || (attributeTwo > maxSingleAttribute || attributeTwo < 0)
