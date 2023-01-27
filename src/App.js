@@ -5,18 +5,25 @@ import Form from './components/Form';
 class App extends React.Component {
   constructor() {
     super();
+
     this.state = {
-      cardName: 'Alow',
-      cardDescription: 'Descrição',
-      cardAttr1: '1',
-      cardAttr2: '2',
-      cardAttr3: '3',
-      cardImage: 'https://styles.redditmedia.com/t5_2su6s/styles/communityIcon_4g1uo0kd87c61.png?width=256&s=3f7493995143d3cf40b1fedc582607cea194b579',
+      cardName: '',
+      cardDescription: '',
+      cardAttr1: '',
+      cardAttr2: '',
+      cardAttr3: '',
+      cardImage: '',
       cardRare: 'normal',
-      cardTrunfo: true,
+      cardTrunfo: false,
       hasTrunfo: false,
-      isSaveButtonDisabled: false,
-      onInputChange: (() => {}),
+      isSaveButtonDisabled: true,
+      onInputChange: ({ target }) => {
+        const { name } = target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        this.setState({
+          [name]: value,
+        });
+      },
       onSaveButtonClick: (() => {}),
     };
   }
