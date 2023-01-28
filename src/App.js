@@ -1,5 +1,6 @@
 import React from 'react';
 import Card from './components/Card';
+import Deck from './components/Deck';
 import Form from './components/Form';
 
 class App extends React.Component {
@@ -148,6 +149,7 @@ class App extends React.Component {
       isSaveButtonDisabled,
       onInputChange,
       onSaveButtonClick,
+      tryunfoDeck,
     } = this.state;
 
     return (
@@ -176,6 +178,7 @@ class App extends React.Component {
           cardRare={ cardRare }
           cardTrunfo={ cardTrunfo }
         />
+        <Deck tryunfoDeck={ tryunfoDeck } />
       </div>
     );
   }
