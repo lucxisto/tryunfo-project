@@ -20,12 +20,11 @@ class App extends React.Component {
       onInputChange: ({ target }) => {
         const { name } = target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
-        this.setState({
+        this.setState(({
           [name]: value,
-        }, this.checkButton);
+        }), this.checkButton);
       },
       onSaveButtonClick: ((event) => {
-        console.log(event);
         event.preventDefault();
         const {
           cardName,
@@ -49,11 +48,16 @@ class App extends React.Component {
             cardRare,
             cardTrunfo,
           }],
-        }), this.resetForm);
+        }), this.refreshFunctions);
       }),
       tryunfoDeck: [],
     };
   }
+
+  refreshFunctions = () => {
+    this.resetForm();
+    this.checkHasTrunfo();
+  };
 
   resetForm = () => {
     this.setState({
@@ -121,6 +125,15 @@ class App extends React.Component {
     return outputAnswer;
   };
 
+  checkHasTrunfo = () => {
+    const { tryunfoDeck } = this.state;
+    if (tryunfoDeck.some((card) => card.cardTrunfo === true)) {
+      this.setState({
+        hasTrunfo: true,
+      });
+    }
+  };
+
   render() {
     const {
       cardName,
@@ -135,7 +148,6 @@ class App extends React.Component {
       isSaveButtonDisabled,
       onInputChange,
       onSaveButtonClick,
-      // tryunfoDeck,
     } = this.state;
 
     return (
