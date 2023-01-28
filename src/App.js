@@ -55,6 +55,11 @@ class App extends React.Component {
     };
   }
 
+  deleteCard = (event) => {
+    // const { tryunfoDeck } = this.state;
+    console.log(event);
+  };
+
   refreshFunctions = () => {
     this.resetForm();
     this.checkHasTrunfo();
@@ -151,7 +156,7 @@ class App extends React.Component {
       onSaveButtonClick,
       tryunfoDeck,
     } = this.state;
-
+    const isPreview = true;
     return (
       <div>
         <Form
@@ -177,8 +182,10 @@ class App extends React.Component {
           cardImage={ cardImage }
           cardRare={ cardRare }
           cardTrunfo={ cardTrunfo }
+          isPreview={ isPreview }
+          deleteCard={ this.deleteCard }
         />
-        <Deck tryunfoDeck={ tryunfoDeck } />
+        <Deck tryunfoDeck={ tryunfoDeck } deleteCard={ this.deleteCard } />
       </div>
     );
   }

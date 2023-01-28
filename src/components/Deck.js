@@ -4,13 +4,14 @@ import Card from './Card';
 
 class Deck extends React.Component {
   render() {
-    const { tryunfoDeck } = this.props;
+    const { tryunfoDeck, deleteCard } = this.props;
+    const isPreview = false;
     return (
       <>
         <h1>Seu Baralho do Tryunfo</h1>
         {
-          tryunfoDeck.map((card) => (<Card
-            key={ card.cardName }
+          tryunfoDeck.map((card, index) => (<Card
+            key={ index }
             cardName={ card.cardName }
             cardDescription={ card.cardDescription }
             cardAttr1={ card.cardAttr1 }
@@ -19,6 +20,8 @@ class Deck extends React.Component {
             cardImage={ card.cardImage }
             cardRare={ card.cardRare }
             cardTrunfo={ card.cardTrunfo }
+            isPreview={ isPreview }
+            deleteCard={ deleteCard }
           />))
         }
       </>
@@ -31,6 +34,7 @@ Deck.propTypes = {
     PropTypes.string,
     PropTypes.bool,
   ).isRequired,
+  deleteCard: PropTypes.func.isRequired,
 };
 
 export default Deck;
