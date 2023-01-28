@@ -24,10 +24,49 @@ class App extends React.Component {
           [name]: value,
         }, this.checkButton);
       },
-      onSaveButtonClick: (() => {}),
-      // tryunfoDeck: [],
+      onSaveButtonClick: ((event) => {
+        console.log(event);
+        event.preventDefault();
+        const {
+          cardName,
+          cardDescription,
+          cardAttr1,
+          cardAttr2,
+          cardAttr3,
+          cardImage,
+          cardRare,
+          cardTrunfo,
+          tryunfoDeck,
+        } = this.state;
+        this.setState(() => ({
+          tryunfoDeck: [...tryunfoDeck, {
+            cardName,
+            cardDescription,
+            cardAttr1,
+            cardAttr2,
+            cardAttr3,
+            cardImage,
+            cardRare,
+            cardTrunfo,
+          }],
+        }), this.resetForm);
+      }),
+      tryunfoDeck: [],
     };
   }
+
+  resetForm = () => {
+    this.setState({
+      cardName: '',
+      cardDescription: '',
+      cardAttr1: '0',
+      cardAttr2: '0',
+      cardAttr3: '0',
+      cardImage: '',
+      cardRare: 'normal',
+      cardTrunfo: false,
+    });
+  };
 
   checkButton = () => {
     if (this.checkTextInput() || this.checkNumberInput()) {
@@ -96,6 +135,7 @@ class App extends React.Component {
       isSaveButtonDisabled,
       onInputChange,
       onSaveButtonClick,
+      // tryunfoDeck,
     } = this.state;
 
     return (
