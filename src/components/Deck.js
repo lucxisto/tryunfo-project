@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import Card from './Card';
 
 class Deck extends React.Component {
-  renderCard = (card, index) => {
+  renderCard(card, index) {
     const { deleteCard } = this.props;
     return (
       <li key={ index }>
         <Card
-          cardId={ ` ${index + 1} ` }
+          cardId={ `${index}` }
           cardName={ card.cardName }
           cardDescription={ card.cardDescription }
           cardAttr1={ card.cardAttr1 }
@@ -26,7 +26,7 @@ class Deck extends React.Component {
         </button>
       </li>
     );
-  };
+  }
 
   render() {
     const { tryunfoDeck, searchName, searchResults } = this.props;
