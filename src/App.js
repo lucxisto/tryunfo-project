@@ -2,6 +2,7 @@ import React from 'react';
 import Card from './components/Card';
 import Deck from './components/Deck';
 import Form from './components/Form';
+import cardDeck from './data';
 
 class App extends React.Component {
   constructor() {
@@ -51,7 +52,8 @@ class App extends React.Component {
           }],
         }), this.refreshFunctions);
       }),
-      tryunfoDeck: [],
+      tryunfoDeck: cardDeck,
+      filteredCards: [],
     };
   }
 
@@ -60,6 +62,15 @@ class App extends React.Component {
     this.setState({
       tryunfoDeck: tryunfoDeck.filter((_, index) => index !== cardIndex),
     }, this.checkHasTrunfo);
+  };
+
+  findCard = ({ target }) => {
+    const { value } = target;
+    const { tryunfoDeck } = this.state;
+    this.setState({
+      filteredCards: tryunfoDeck.filter((card) => card.cardName
+        .toLowerCase().includes(value.toLowerCase())),
+    });
   };
 
   refreshFunctions = () => {
@@ -161,6 +172,7 @@ class App extends React.Component {
       onInputChange,
       onSaveButtonClick,
       tryunfoDeck,
+      filteredCards,
     } = this.state;
     return (
       <div>
@@ -189,7 +201,12 @@ class App extends React.Component {
           cardRare={ cardRare }
           cardTrunfo={ cardTrunfo }
         />
-        <Deck tryunfoDeck={ tryunfoDeck } deleteCard={ this.removeCard } />
+        <Deck
+          tryunfoDeck={ tryunfoDeck }
+          searchResults={ filteredCards }
+          deleteCard={ this.removeCard }
+          searchName={ this.findCard }
+        />
       </div>
     );
   }
