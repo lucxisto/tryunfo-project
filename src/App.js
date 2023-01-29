@@ -55,9 +55,11 @@ class App extends React.Component {
     };
   }
 
-  deleteCard = (event) => {
-    // const { tryunfoDeck } = this.state;
-    console.log(event);
+  removeCard = (cardIndex) => {
+    const { tryunfoDeck } = this.state;
+    this.setState({
+      tryunfoDeck: tryunfoDeck.filter((card, index) => index !== cardIndex),
+    }, this.checkHasTrunfo);
   };
 
   refreshFunctions = () => {
@@ -137,6 +139,10 @@ class App extends React.Component {
       this.setState({
         hasTrunfo: true,
       });
+    } else {
+      this.setState({
+        hasTrunfo: false,
+      });
     }
   };
 
@@ -156,7 +162,6 @@ class App extends React.Component {
       onSaveButtonClick,
       tryunfoDeck,
     } = this.state;
-    const isPreview = true;
     return (
       <div>
         <Form
@@ -174,6 +179,7 @@ class App extends React.Component {
           onSaveButtonClick={ onSaveButtonClick }
         />
         <Card
+          cardId="Preview"
           cardName={ cardName }
           cardDescription={ cardDescription }
           cardAttr1={ cardAttr1 }
@@ -182,10 +188,8 @@ class App extends React.Component {
           cardImage={ cardImage }
           cardRare={ cardRare }
           cardTrunfo={ cardTrunfo }
-          isPreview={ isPreview }
-          deleteCard={ this.deleteCard }
         />
-        <Deck tryunfoDeck={ tryunfoDeck } deleteCard={ this.deleteCard } />
+        <Deck tryunfoDeck={ tryunfoDeck } deleteCard={ this.removeCard } />
       </div>
     );
   }

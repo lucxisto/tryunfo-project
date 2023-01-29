@@ -5,6 +5,7 @@ import './Card.css';
 class Card extends React.Component {
   render() {
     const {
+      cardId,
       cardName,
       cardDescription,
       cardAttr1,
@@ -13,15 +14,10 @@ class Card extends React.Component {
       cardImage,
       cardRare,
       cardTrunfo,
-      isPreview,
-      deleteCard,
     } = this.props;
-    const deleteButton = (
-      <button data-testid="delete-button" onClick={ deleteCard }>
-        Excluir
-      </button>);
     return (
       <div className="card">
+        <p>{ cardId }</p>
         <h1 data-testid="name-card">{ cardName }</h1>
         <img src={ cardImage } alt={ cardName } data-testid="image-card" />
         <p data-testid="description-card">{ cardDescription }</p>
@@ -32,16 +28,13 @@ class Card extends React.Component {
         {
           cardTrunfo === true && <p data-testid="trunfo-card"> Super Trunfo </p>
         }
-        {
-          isPreview ? ''
-            : deleteButton
-        }
       </div>
     );
   }
 }
 
 Card.propTypes = {
+  cardId: PropTypes.string.isRequired,
   cardName: PropTypes.string.isRequired,
   cardDescription: PropTypes.string.isRequired,
   cardAttr1: PropTypes.string.isRequired,
@@ -50,8 +43,6 @@ Card.propTypes = {
   cardImage: PropTypes.string.isRequired,
   cardRare: PropTypes.string.isRequired,
   cardTrunfo: PropTypes.bool.isRequired,
-  isPreview: PropTypes.bool.isRequired,
-  deleteCard: PropTypes.func.isRequired,
 };
 
 export default Card;
