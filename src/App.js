@@ -2,7 +2,7 @@ import React from 'react';
 import Card from './components/Card';
 import Deck from './components/Deck';
 import Form from './components/Form';
-import cardDeck from './data';
+// import cardDeck from './data';
 
 class App extends React.Component {
   constructor() {
@@ -52,7 +52,7 @@ class App extends React.Component {
           }],
         }), this.refreshFunctions);
       }),
-      tryunfoDeck: cardDeck,
+      tryunfoDeck: [],
       filteredCards: [],
     };
   }
