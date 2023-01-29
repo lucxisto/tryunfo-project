@@ -58,7 +58,7 @@ class App extends React.Component {
   removeCard = (cardIndex) => {
     const { tryunfoDeck } = this.state;
     this.setState({
-      tryunfoDeck: tryunfoDeck.filter((card, index) => index !== cardIndex),
+      tryunfoDeck: tryunfoDeck.filter((_, index) => index !== cardIndex),
     }, this.checkHasTrunfo);
   };
 
