@@ -1,0 +1,56 @@
+searchCard ({ target }) => {
+  const { type } = target;
+  const { tryunfoDeck, searchInput } = this.state;
+  const value = target.checked ? target.checked :  target.value;
+  const { name, rarity, filterDisable } = searchInput;
+  if (type === 'checkbox') {
+    this.setState({
+      searchInput: { name, rarity, filterDisable: value },
+    })
+  } else if (type === 'text') {
+    this.setState({
+      searchInput: { name: value, rarity, filterDisable },
+    })
+  } else if (type === 'select-one') {
+    this.setState({
+      searchInput: { name, rarity: value, filterDisable },
+    })
+  }
+  this.setState({
+    filteredCards: tryunfoDeck.filter((card) => card.cardName
+      .toLowerCase().includes(searchInput.name.toLowerCase())
+      || card.cardRare === searchInput.rarity 
+      || card.cardTrunfo === searchInput.filterDisable),
+  })
+}
+
+  // findCardByName = ({ target }) => {
+  //   // const { value } = target;
+  //   const { tryunfoDeck } = this.state;
+  //   console.log(target.type);
+  //   this.setState({
+  //     filteredCards: tryunfoDeck.filter((card) => card.cardName
+  //       .toLowerCase().includes(value.toLowerCase())),
+  //     searchInput: { name: value },
+  //   });
+  // };
+
+  // findCardByRarity = ({ target }) => {
+  //   const { value } = target;
+  //   const { tryunfoDeck, filteredCards } = this.state;
+  //   console.log(target.type);
+  //   if (filteredCards.length === 0) {
+  //     this.setState({
+  //       filteredCards: tryunfoDeck.filter((card) => card
+  //         .cardRare === value.toLowerCase()),
+  //       searchInput: { rarity: value },
+  //     });
+  //   } else {
+  //     const filteredByRarity = filteredCards.filter((card) => card
+  //       .cardRare === value.toLowerCase());
+  //     this.setState({
+  //       filteredCards: filteredByRarity,
+  //       searchInput: { rarity: value },
+  //     });
+  //   }
+  // };

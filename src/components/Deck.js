@@ -5,8 +5,9 @@ import './Deck.css';
 
 class Deck extends React.Component {
   render() {
-    const { tryunfoDeck, searchName, deleteCard, searchResults,
-      searchInput, searchRarity } = this.props;
+    const { tryunfoDeck, searchCard, deleteCard, searchResults,
+      searchInput } = this.props;
+    const { filterDisable } = searchInput;
     const inputSearch = (
       <label htmlFor="name-filter">
         Pesquise:
@@ -14,7 +15,8 @@ class Deck extends React.Component {
           id="name-filter"
           data-testid="name-filter"
           type="text"
-          onChange={ searchName }
+          onChange={ searchCard }
+          disabled={ filterDisable }
         />
       </label>
     );
@@ -24,7 +26,8 @@ class Deck extends React.Component {
         <select
           id="rare-filter"
           data-testid="rare-filter"
-          onChange={ searchRarity }
+          onChange={ searchCard }
+          disabled={ filterDisable }
         >
           <option>todas</option>
           <option>normal</option>
@@ -34,16 +37,25 @@ class Deck extends React.Component {
         </select>
       </label>
     );
-    const cardsToRender = (searchInput.name !== ''
-      && searchInput.rarity !== 'todas')
+    const cardsToRender = searchInput.name !== ''
+      || searchInput.rarity !== 'todas'
       || searchResults.length > 0
       ? searchResults : tryunfoDeck;
-    console.log(searchInput);
     return (
       <section className="deck">
         <h1>Seu Baralho do Tryunfo</h1>
         { inputSearch }
         { optionSearch }
+        <label htmlFor="trunfo-filter">
+          Super Trunfo
+          <input
+            id="trunfo-filter"
+            type="checkbox"
+            onChange={ searchCard }
+            checked={ searchResults.filterDisable }
+            data-testid="trunfo-filter"
+          />
+        </label>
         <ul>
           {
             cardsToRender.map((card, index) => (
@@ -96,14 +108,13 @@ Deck.propTypes = {
       cardTrunfo: PropTypes.bool.isRequired,
     }),
   ).isRequired,
-  searchInput: PropTypes.objectOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      rarity: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
-  searchName: PropTypes.func.isRequired,
-  searchRarity: PropTypes.func.isRequired,
+  searchInput: PropTypes.objectOf({
+    name: PropTypes.string.isRequired,
+    rarity: PropTypes.string.isRequired,
+    filterDisable: PropTypes.bool.isRequired,
+  }).isRequired,
+  searchCard: PropTypes.func.isRequired,
+  // searchRarity: PropTypes.func.isRequired,
   deleteCard: PropTypes.func.isRequired,
 };
 

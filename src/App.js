@@ -3,6 +3,7 @@ import Card from './components/Card';
 import Deck from './components/Deck';
 import Form from './components/Form';
 import './App.css';
+// import cardDeck from './data';
 
 export default class App extends React.Component {
   constructor() {
@@ -137,33 +138,36 @@ export default class App extends React.Component {
     }, this.checkHasTrunfo);
   };
 
-  findCardByName = ({ target }) => {
-    const { value } = target;
-    const { tryunfoDeck } = this.state;
-    this.setState({
-      filteredCards: tryunfoDeck.filter((card) => card.cardName
-        .toLowerCase().includes(value.toLowerCase())),
-      searchInput: { name: value },
-    });
+  searchCard = ({ target }) => {
+    const { type } = target;
+    const { searchInput } = this.state;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const { name, rarity, filterDisable } = searchInput;
+    if (type === 'checkbox') {
+      this.setState({
+        searchInput: { name, rarity, filterDisable: value },
+      }, this.cardsFound(value));
+    } else if (type === 'text') {
+      this.setState({
+        searchInput: { name: value, rarity, filterDisable },
+      }, this.cardsFound(value));
+    } else if (type === 'select-one') {
+      this.setState({
+        searchInput: { name, rarity: value, filterDisable },
+      }, this.cardsFound(value));
+    }
   };
 
-  findCardByRarity = ({ target }) => {
-    const { value } = target;
+  cardsFound = (value) => {
     const { tryunfoDeck, filteredCards } = this.state;
-    if (filteredCards.length === 0) {
-      this.setState({
-        filteredCards: tryunfoDeck.filter((card) => card
-          .cardRare === value.toLowerCase()),
-        searchInput: { rarity: value },
-      });
-    } else {
-      const filteredByRarity = filteredCards.filter((card) => card
-        .cardRare === value.toLowerCase());
-      this.setState({
-        filteredCards: filteredByRarity,
-        searchInput: { rarity: value },
-      });
-    }
+    const refinedValue = typeof value === 'string' ? value.toLowerCase() : value;
+    console.log(refinedValue);
+    this.setState({
+      filteredCards: tryunfoDeck.filter((card) => card.cardName
+        .toLowerCase().includes(refinedValue)
+        || card.cardRare === refinedValue
+        || card.cardTrunfo === refinedValue),
+    }, console.log(filteredCards));
   };
 
   render() {
@@ -205,8 +209,8 @@ export default class App extends React.Component {
             tryunfoDeck={ tryunfoDeck }
             searchResults={ filteredCards }
             deleteCard={ this.removeCard }
-            searchName={ this.findCardByName }
-            searchRarity={ this.findCardByRarity }
+            searchCard={ this.searchCard }
+            // searchRarity={ this.findCardByRarity }
           />
         </div>
       </>
