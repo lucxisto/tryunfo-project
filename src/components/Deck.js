@@ -1,33 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Card from './Card';
+import './Deck.css';
 
 class Deck extends React.Component {
-  // renderCard = (card, index) => {
-  //   const { deleteCard } = this.props;
-  //   return (
-  //     <li key={ index }>
-  //       <Card
-  //         cardId={ `${index + 1}` }
-  //         cardName={ card.cardName }
-  //         cardDescription={ card.cardDescription }
-  //         cardAttr1={ card.cardAttr1 }
-  //         cardAttr2={ card.cardAttr2 }
-  //         cardAttr3={ card.cardAttr3 }
-  //         cardImage={ card.cardImage }
-  //         cardRare={ card.cardRare }
-  //         cardTrunfo={ card.cardTrunfo }
-  //       />
-  //       <button
-  //         data-testid="delete-button"
-  //         onClick={ () => deleteCard(index) }
-  //       >
-  //         Excluir
-  //       </button>
-  //     </li>
-  //   );
-  // };
-
   render() {
     const {
       tryunfoDeck,
@@ -35,10 +11,11 @@ class Deck extends React.Component {
       deleteCard,
       searchResults,
       searchInput,
+      searchRarity,
     } = this.props;
     const inputSearch = (
       <label htmlFor="name-filter">
-        Pesquise
+        Pesquise:
         <input
           id="name-filter"
           data-testid="name-filter"
@@ -47,39 +24,57 @@ class Deck extends React.Component {
         />
       </label>
     );
-    const cardsToRender = searchInput !== '' || searchResults.length > 0
-      ? searchResults : tryunfoDeck;
+    const optionSearch = (
+      <label htmlFor="rare-filter">
+        Raridade:
+        <select
+          id="rare-filter"
+          data-testid="rare-filter"
+          onChange={ searchRarity }
+        >
+          <option>todas</option>
+          <option>normal</option>
+          <option>raro</option>
+          <option>muito raro</option>
 
+        </select>
+      </label>
+    );
+    const cardsToRender = (searchInput.name !== ''
+      && searchInput.rarity !== 'todas')
+      || searchResults.length > 0
+      ? searchResults : tryunfoDeck;
+    console.log(searchInput);
     return (
-      <ul>
+      <section className="deck">
         <h1>Seu Baralho do Tryunfo</h1>
         { inputSearch }
-        {
-          console.log(searchName)
-        }
-        {
-          cardsToRender.map((card, index) => (
-            <li key={ index }>
-              <Card
-                cardId={ `${index + 1}` }
-                cardName={ card.cardName }
-                cardDescription={ card.cardDescription }
-                cardAttr1={ card.cardAttr1 }
-                cardAttr2={ card.cardAttr2 }
-                cardAttr3={ card.cardAttr3 }
-                cardImage={ card.cardImage }
-                cardRare={ card.cardRare }
-                cardTrunfo={ card.cardTrunfo }
-              />
-              <button
-                data-testid="delete-button"
-                onClick={ () => deleteCard(index) }
-              >
-                Excluir
-              </button>
-            </li>))
-        }
-      </ul>
+        { optionSearch }
+        <ul>
+          {
+            cardsToRender.map((card, index) => (
+              <li key={ index }>
+                <Card
+                  cardId={ `${index + 1}` }
+                  cardName={ card.cardName }
+                  cardDescription={ card.cardDescription }
+                  cardAttr1={ card.cardAttr1 }
+                  cardAttr2={ card.cardAttr2 }
+                  cardAttr3={ card.cardAttr3 }
+                  cardImage={ card.cardImage }
+                  cardRare={ card.cardRare }
+                  cardTrunfo={ card.cardTrunfo }
+                />
+                <button
+                  data-testid="delete-button"
+                  onClick={ () => deleteCard(index) }
+                >
+                  Excluir
+                </button>
+              </li>))
+          }
+        </ul>
+      </section>
     );
   }
 }
@@ -107,8 +102,14 @@ Deck.propTypes = {
       cardTrunfo: PropTypes.bool.isRequired,
     }),
   ).isRequired,
-  searchInput: PropTypes.string.isRequired,
+  searchInput: PropTypes.objectOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      rarity: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
   searchName: PropTypes.func.isRequired,
+  searchRarity: PropTypes.func.isRequired,
   deleteCard: PropTypes.func.isRequired,
 };
 

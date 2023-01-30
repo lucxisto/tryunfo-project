@@ -5,10 +5,9 @@ import Form from './components/Form';
 import './App.css';
 // import cardDeck from './data';
 
-class App extends React.Component {
+export default class App extends React.Component {
   constructor() {
     super();
-
     this.state = {
       cardName: '',
       cardDescription: '',
@@ -21,43 +20,51 @@ class App extends React.Component {
       hasTrunfo: false,
       isSaveButtonDisabled: true,
       onInputChange: ({ target }) => {
-        const { name } = target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
-        this.setState(({
-          [name]: value,
-        }), this.checkButton);
+        this.onInputChanges(target);
       },
       onSaveButtonClick: ((event) => {
-        event.preventDefault();
-        const {
-          cardName,
-          cardDescription,
-          cardAttr1,
-          cardAttr2,
-          cardAttr3,
-          cardImage,
-          cardRare,
-          cardTrunfo,
-          tryunfoDeck,
-        } = this.state;
-        this.setState(() => ({
-          tryunfoDeck: [...tryunfoDeck, {
-            cardName,
-            cardDescription,
-            cardAttr1,
-            cardAttr2,
-            cardAttr3,
-            cardImage,
-            cardRare,
-            cardTrunfo,
-          }],
-        }), this.refreshFunctions);
+        this.saveCard(event);
       }),
       tryunfoDeck: [],
       filteredCards: [],
-      searchInput: '',
+      searchInput: { name: '', rarity: 'todas' },
     };
   }
+
+  onInputChanges = (target) => {
+    const { name } = target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    this.setState(({
+      [name]: value,
+    }), this.checkButton);
+  };
+
+  saveCard = (event) => {
+    event.preventDefault();
+    const {
+      cardName,
+      cardDescription,
+      cardAttr1,
+      cardAttr2,
+      cardAttr3,
+      cardImage,
+      cardRare,
+      cardTrunfo,
+      tryunfoDeck,
+    } = this.state;
+    this.setState(() => ({
+      tryunfoDeck: [...tryunfoDeck, {
+        cardName,
+        cardDescription,
+        cardAttr1,
+        cardAttr2,
+        cardAttr3,
+        cardImage,
+        cardRare,
+        cardTrunfo,
+      }],
+    }), this.refreshFunctions);
+  };
 
   refreshFunctions = () => {
     this.resetForm();
@@ -151,15 +158,33 @@ class App extends React.Component {
     }, this.checkHasTrunfo);
   };
 
-  findCard = ({ target }) => {
+  findCardByName = ({ target }) => {
     const { value } = target;
     const { tryunfoDeck } = this.state;
     this.setState({
       filteredCards: tryunfoDeck.filter((card) => card.cardName
         .toLowerCase().includes(value.toLowerCase())),
-      searchInput: value,
+      searchInput: { name: value },
     });
-    return value;
+  };
+
+  findCardByRarity = ({ target }) => {
+    const { value } = target;
+    const { tryunfoDeck, filteredCards } = this.state;
+    if (filteredCards.length === 0) {
+      this.setState({
+        filteredCards: tryunfoDeck.filter((card) => card
+          .cardRare === value.toLowerCase()),
+        searchInput: { rarity: value },
+      });
+    } else {
+      const filteredByRarity = filteredCards.filter((card) => card
+        .cardRare === value.toLowerCase());
+      this.setState({
+        filteredCards: filteredByRarity,
+        searchInput: { rarity: value },
+      });
+    }
   };
 
   render() {
@@ -215,12 +240,11 @@ class App extends React.Component {
             tryunfoDeck={ tryunfoDeck }
             searchResults={ filteredCards }
             deleteCard={ this.removeCard }
-            searchName={ this.findCard }
+            searchName={ this.findCardByName }
+            searchRarity={ this.findCardByRarity }
           />
         </div>
       </>
     );
   }
 }
-
-export default App;
