@@ -5,14 +5,8 @@ import './Deck.css';
 
 class Deck extends React.Component {
   render() {
-    const {
-      tryunfoDeck,
-      searchName,
-      deleteCard,
-      searchResults,
-      searchInput,
-      searchRarity,
-    } = this.props;
+    const { tryunfoDeck, searchName, deleteCard, searchResults,
+      searchInput, searchRarity } = this.props;
     const inputSearch = (
       <label htmlFor="name-filter">
         Pesquise:

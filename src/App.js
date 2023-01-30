@@ -3,7 +3,6 @@ import Card from './components/Card';
 import Deck from './components/Deck';
 import Form from './components/Form';
 import './App.css';
-// import cardDeck from './data';
 
 export default class App extends React.Component {
   constructor() {
@@ -27,7 +26,7 @@ export default class App extends React.Component {
       }),
       tryunfoDeck: [],
       filteredCards: [],
-      searchInput: { name: '', rarity: 'todas' },
+      searchInput: { name: '', rarity: 'todas', filterDisable: false },
     };
   }
 
@@ -41,17 +40,8 @@ export default class App extends React.Component {
 
   saveCard = (event) => {
     event.preventDefault();
-    const {
-      cardName,
-      cardDescription,
-      cardAttr1,
-      cardAttr2,
-      cardAttr3,
-      cardImage,
-      cardRare,
-      cardTrunfo,
-      tryunfoDeck,
-    } = this.state;
+    const { cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3, cardImage,
+      cardRare, cardTrunfo, tryunfoDeck } = this.state;
     this.setState(() => ({
       tryunfoDeck: [...tryunfoDeck, {
         cardName,
@@ -97,24 +87,13 @@ export default class App extends React.Component {
   };
 
   checkTextInput = () => {
-    const {
-      cardName,
-      cardDescription,
-      cardImage,
-      cardRare,
-    } = this.state;
-    return cardName === ''
-        || cardDescription === ''
-        || cardImage === ''
-        || cardRare === '';
+    const { cardName, cardDescription, cardImage, cardRare } = this.state;
+    return cardName === '' || cardDescription === ''
+      || cardImage === '' || cardRare === '';
   };
 
   checkNumberInput = () => {
-    const {
-      cardAttr1,
-      cardAttr2,
-      cardAttr3,
-    } = this.state;
+    const { cardAttr1, cardAttr2, cardAttr3 } = this.state;
     let outputAnswer;
     if (cardAttr1 === '' || cardAttr2 === '' || cardAttr3 === '') {
       outputAnswer = true;
@@ -188,23 +167,9 @@ export default class App extends React.Component {
   };
 
   render() {
-    const {
-      cardName,
-      cardDescription,
-      cardAttr1,
-      cardAttr2,
-      cardAttr3,
-      cardImage,
-      cardRare,
-      cardTrunfo,
-      hasTrunfo,
-      isSaveButtonDisabled,
-      onInputChange,
-      onSaveButtonClick,
-      tryunfoDeck,
-      filteredCards,
-      searchInput,
-    } = this.state;
+    const { cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3, cardImage,
+      cardRare, cardTrunfo, hasTrunfo, isSaveButtonDisabled, onInputChange,
+      onSaveButtonClick, tryunfoDeck, filteredCards, searchInput } = this.state;
     return (
       <>
         <div className="form">

@@ -1,5 +1,5 @@
 const description = 'Cara Legal';
-const veryRare = 'to raro';
+const veryRare = 'muito raro';
 const cardDeck = [
   {
     cardName: 'Lucas',
@@ -59,7 +59,7 @@ const cardDeck = [
     cardAttr3: '68',
     cardImage: 'asda',
     cardRare: veryRare,
-    cardTrunfo: true,
+    cardTrunfo: false,
   },
   {
     cardName: 'Clau',
@@ -109,7 +109,7 @@ const cardDeck = [
     cardAttr3: '68',
     cardImage: 'asda',
     cardRare: veryRare,
-    cardTrunfo: true,
+    cardTrunfo: false,
   },
   {
     cardName: 'Clau',
