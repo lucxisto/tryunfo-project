@@ -1,0 +1,55 @@
+const description = 'Cara Legal';
+const rarity = 'muito raro';
+const cardDeck = [
+  {
+    cardName: 'Lucas',
+    cardDescription: description,
+    cardAttr1: '23',
+    cardAttr2: '54',
+    cardAttr3: '68',
+    cardImage: 'asda',
+    cardRare: rarity,
+    cardTrunfo: true,
+  },
+  {
+    cardName: 'Clau',
+    cardDescription: description,
+    cardAttr1: '23',
+    cardAttr2: '54',
+    cardAttr3: '68',
+    cardImage: 'asda',
+    cardRare: rarity,
+    cardTrunfo: false,
+  },
+  {
+    cardName: 'Biro',
+    cardDescription: description,
+    cardAttr1: '23',
+    cardAttr2: '54',
+    cardAttr3: '68',
+    cardImage: 'asda',
+    cardRare: rarity,
+    cardTrunfo: false,
+  },
+  {
+    cardName: 'Teto',
+    cardDescription: description,
+    cardAttr1: '23',
+    cardAttr2: '54',
+    cardAttr3: '68',
+    cardImage: 'asda',
+    cardRare: rarity,
+    cardTrunfo: false,
+  },
+  {
+    cardName: 'Flavi',
+    cardDescription: description,
+    cardAttr1: '23',
+    cardAttr2: '54',
+    cardAttr3: '68',
+    cardImage: 'asda',
+    cardRare: rarity,
+    cardTrunfo: false,
+  },
+];
+export default cardDeck;

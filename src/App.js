@@ -55,15 +55,16 @@ class App extends React.Component {
       }),
       tryunfoDeck: [],
       filteredCards: [],
+      searchInput: '',
     };
   }
 
-  refreshFunctions() {
+  refreshFunctions = () => {
     this.resetForm();
     this.checkHasTrunfo();
-  }
+  };
 
-  resetForm() {
+  resetForm = () => {
     this.setState({
       cardName: '',
       cardDescription: '',
@@ -74,9 +75,9 @@ class App extends React.Component {
       cardRare: 'normal',
       cardTrunfo: false,
     });
-  }
+  };
 
-  checkButton() {
+  checkButton = () => {
     if (this.checkTextInput() || this.checkNumberInput()) {
       this.setState({
         isSaveButtonDisabled: true,
@@ -86,9 +87,9 @@ class App extends React.Component {
         isSaveButtonDisabled: false,
       });
     }
-  }
+  };
 
-  checkTextInput() {
+  checkTextInput = () => {
     const {
       cardName,
       cardDescription,
@@ -99,9 +100,9 @@ class App extends React.Component {
         || cardDescription === ''
         || cardImage === ''
         || cardRare === '';
-  }
+  };
 
-  checkNumberInput() {
+  checkNumberInput = () => {
     const {
       cardAttr1,
       cardAttr2,
@@ -127,9 +128,9 @@ class App extends React.Component {
       }
     }
     return outputAnswer;
-  }
+  };
 
-  checkHasTrunfo() {
+  checkHasTrunfo = () => {
     const { tryunfoDeck } = this.state;
     if (tryunfoDeck.some((card) => card.cardTrunfo === true)) {
       this.setState({
@@ -140,23 +141,26 @@ class App extends React.Component {
         hasTrunfo: false,
       });
     }
-  }
+  };
 
-  removeCard(cardIndex) {
+  removeCard = (cardIndex) => {
     const { tryunfoDeck } = this.state;
+    const filterResult = tryunfoDeck.filter((_, index) => index !== cardIndex);
     this.setState({
-      tryunfoDeck: tryunfoDeck.filter((_, index) => index !== cardIndex),
+      tryunfoDeck: filterResult,
     }, this.checkHasTrunfo);
-  }
+  };
 
-  findCard({ target }) {
+  findCard = ({ target }) => {
     const { value } = target;
     const { tryunfoDeck } = this.state;
     this.setState({
       filteredCards: tryunfoDeck.filter((card) => card.cardName
         .toLowerCase().includes(value.toLowerCase())),
+      searchInput: value,
     });
-  }
+    return value;
+  };
 
   render() {
     const {
@@ -174,6 +178,7 @@ class App extends React.Component {
       onSaveButtonClick,
       tryunfoDeck,
       filteredCards,
+      searchInput,
     } = this.state;
     return (
       <>
@@ -206,6 +211,7 @@ class App extends React.Component {
         </div>
         <div className="deck">
           <Deck
+            searchInput={ searchInput }
             tryunfoDeck={ tryunfoDeck }
             searchResults={ filteredCards }
             deleteCard={ this.removeCard }
