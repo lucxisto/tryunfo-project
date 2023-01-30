@@ -3,7 +3,6 @@ import Card from './components/Card';
 import Deck from './components/Deck';
 import Form from './components/Form';
 import './App.css';
-// import cardDeck from './data';
 
 export default class App extends React.Component {
   constructor() {
